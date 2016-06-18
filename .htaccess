@@ -1,0 +1,28 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+
+    RewriteEngine On
+    # Redirect Trailing Slashes If Not A Folder...
+    #RewriteCond %{REQUEST_FILENAME} !-d
+    #RewriteRule ^(.*)/$ /web/public/$1 [L,R=301]
+    # Handle Front Controller...
+    #RewriteCond %{REQUEST_URI} ^public.*$
+    RewriteRule ^public/(.*)$ /web/public/$1 [L]
+    RewriteCond %{REQUEST_URI} !public
+    RewriteRule ^(.*)$ /web/public/index.php/$1 [L]
+</IfModule>
+<IfModule mod_deflate.c>
+	<IfModule mod_filter.c>
+	# these are known to be safe with MSIE 6
+	AddOutputFilterByType DEFLATE text/html text/plain text/xml
+
+	# everything else may cause problems with MSIE 6
+	AddOutputFilterByType DEFLATE text/css
+	AddOutputFilterByType DEFLATE application/json
+	AddOutputFilterByType DEFLATE application/x-javascript application/javascript application/ecmascript
+	AddOutputFilterByType DEFLATE application/rss+xml
+	AddOutputFilterByType DEFLATE application/xml
+	</IfModule>
+</IfModule>

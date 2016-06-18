@@ -1,0 +1,16 @@
+{
+  "name": "Wawaku-Lottery",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+		"watch": "node-sass --watch --output-style compressed style.sass style.css"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bulma": "0.0.28",
+    "vue-admin": "0.0.1"
+  }
+}
