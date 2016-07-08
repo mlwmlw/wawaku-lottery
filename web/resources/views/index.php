@@ -55,13 +55,15 @@
 			<div class="hero-body">
 				<div class="container">
           <div class="columns is-vcentered">
-            <div class="column is-6">
+            <div class="column is-6" style="overflow:hidden">
               <h1 class="title is-2">
 								臉書留言抽獎
               </h1>
 							<br />
               <h2 class="subtitle is-4">
-								幫小編公平的從眾多留言中挑出得獎者！<br />
+								你有辦活動抽獎的困擾嗎？<br />
+								<br />
+								我們能幫忙小編公平的從眾多留言中挑出得獎者！<br />
 								<br />
 								你知道辦臉書抽獎活動可以增加多少粉絲嗎？
               </h2>
@@ -82,7 +84,7 @@
               </p>
             </div>
             <div class="column is-5 is-offset-1">
-              <figure class="image is-4by3">
+              <figure class="image">
                 <img src="/public/tutorial.gif" />
               </figure>
             </div>
@@ -247,5 +249,15 @@
 			js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.6&appId=183271221771652";
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));</script>	
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-80478450-1', 'auto');
+			ga('send', 'pageview');
+
+		</script>
   </body>
 </html>
