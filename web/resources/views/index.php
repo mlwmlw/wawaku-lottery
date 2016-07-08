@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
+		<link rel="icon" href="/public/logo.png">
     <title><?=isset($title) ? $title . ' - ': ''?>臉書留言抽獎</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/public/css/style.css">
@@ -17,22 +18,27 @@
   </head>
   <body ng-controller="ctrl">
 		
-		<section class="hero is-success">
+		<section class="hero is-white">
 			<div class="hero-head">
 				<header class="nav">
 					<div class="container">
 						<div class="nav-left">
-							<a class="nav-item">
+							<a class="nav-item" href="/">
 								<i class="fa fa-smile-o" aria-hidden="true"></i>
 								　臉書留言抽獎
 							</a>
 						</div>
-						<div class="nav-right nav-menu">
+						<span class="nav-toggle" ng-class="{'is-active': toggle}" ng-click="toggle = !toggle">
+							<span></span>
+							<span></span>
+							<span></span>
+						</span>
+						<div class="nav-right nav-menu" ng-class="{'is-active': toggle}">
 							<a class="nav-item is-active">
 								Home
 							</a>
-							<a target="_blank" href="https://github.com/mlwmlw/Wawaku-Lottery/wiki" class="nav-item">
-								Documentation
+							<a target="_blank" href="https://mlwmlw.org" class="nav-item">
+								author
 							</a>
 							<span class="nav-item">
 								<a target="_blank" href="https://github.com/mlwmlw/Wawaku-Lottery/issues" class="button is-success is-inverted">
@@ -46,7 +52,45 @@
 					</div>
 				</header>
 			</div>	
+			<div class="hero-body">
+				<div class="container">
+          <div class="columns is-vcentered">
+            <div class="column is-6">
+              <h1 class="title is-2">
+								臉書留言抽獎
+              </h1>
+							<br />
+              <h2 class="subtitle is-4">
+								幫小編公平的從眾多留言中挑出得獎者！<br />
+								<br />
+								你知道辦臉書抽獎活動可以增加多少粉絲嗎？
+              </h2>
+							
+							<form ng-submit="query()">
+								<p class="control has-icon has-addons">
+									<input ng-model="url" class="input is-expanded" type="url" placeholder="FB 文章網址" /> <i class="fa fa-facebook"></i>
+								</p>
+							</form>
+							<br />
+              <p class="control is-pulled-right">
+                <a class="button is-large is-primary" ng-click="query()" ng-class="{'is-loading': loading}">
+									馬上試試！
+                </a>
+                <a class="button is-large is-info" href="#intro">
+									看詳細說明
+                </a>
+              </p>
+            </div>
+            <div class="column is-5 is-offset-1">
+              <figure class="image is-4by3">
+                <img src="/public/tutorial.gif" />
+              </figure>
+            </div>
+          </div>
+        </div>
+			</div>
 		</section>
+		<section>
 		<? if(isset($winner)):?>
 		<div class="content columns is-mobile">
 			<div class="column is-half-desktop is-offset-one-quarter-desktop">
@@ -58,23 +102,10 @@
 				<div class="fb-share-button is-pulled-right" data-href="<?=$uri?>" data-layout="button_count" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?=urlencode($uri)?>;src=sdkpreparse">分享</a></div>
 			</div>
 		</div>
-		<? endif;?>
-		<div class="content columns is-mobile">
-			<div class="column is-mobile is-half-desktop is-offset-one-quarter-desktop">
-				<form ng-submit="query()">
-				<p class="control has-icon has-addons">
-					<input ng-model="url" class="input is-expanded" type="url" placeholder="FB 文章網址"> <i class="fa fa-facebook"></i> <a class="button is-info" ng-click="query()" ng-class="{'is-loading': loading}">
-						載入抽獎名單
-					</a>
-				</p>
-					</form>
-			</div>
-		</div>
-		<div class="columns is-mobile">
-			<div class="column has-text-centered" ng-if="!comments">
-				<iframe src="//giphy.com/embed/3o6gDTswSOojDjw080" width="480" height="406" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="http://giphy.com/gifs/3o6gDTswSOojDjw080">via GIPHY</a></p>
-			</div>
-			<div class="column is-3 is-offset-9" ng-if="comments">
+		<? else: ?>
+		
+		<div class="columns is-mobile" ng-if="comments">
+			<div class="column is-3 is-offset-9">
 				<a ng-click="random()" class="button is-primary is-large">打亂</a>
 				<a class="button is-warning is-large" ng-click="lottery()">抽獎</a>
 			</div>
@@ -110,7 +141,7 @@
 				<section class="modal-card-body">
 				<article class="media">
 					<figure class="media-left">
-						<p class="image is-100x100">
+						<p class="image is-96x96">
 							<img ng-src="{{winner.user.url}}">
 						</p>
 					</figure>
@@ -118,18 +149,54 @@
 						{{winner.comment.msg}}
 						<br />
 						<small class="is-pulled-right">{{comment.created_time}}</small>
-
 					</div>
 				</article>
 				</section>
 				<footer class="modal-card-foot">
-					<a class="button is-success" target="_blank" href="/winner?url={{url}}&winner={{winner.comment.post}}">得獎連結</a>
-					<a class="button is-primary" target="_blank" href="{{url + '?comment_id=' + winner.comment.post}}">查看留言</a>
-					<a class="button is-warning" ng-click="winner = null; lottery()">抽下一個</a>
-					<a class="button" ng-click="winner = null">結束</a>
+					<div class="columns is-multiline">
+					<a class="column button is-success" target="_blank" href="/winner?url={{url}}&winner={{winner.comment.post}}">得獎連結</a>
+					<a class="column button is-primary" target="_blank" href="{{url + '?comment_id=' + winner.comment.post}}">查看留言</a>
+					<a class="column button is-warning" ng-click="winner = null; lottery()">抽下一個</a>
+					<a class="column button" ng-click="winner = null">結束</a>
+					</div>
 				</footer>
 			</div>
 		</div>
+		</section>
+		<section class="hero is-info">
+			<div class="hero-body">
+			<div class="container ">
+				<h3 id="intro" class="title">詳細說明</h3>
+				<div class="columns is-multiline">
+					<div class="column is-half-desktop">
+						1. 找到要抽獎的文章（注意文章要設公開噢），按右上角的三角形，選嵌入
+						<figure class="image">
+							<img src="/public/intro1.png">
+						</figure>
+					</div>
+					<div class="column is-half-desktop">
+						2. 在跳出的視窗中選「進階設定」
+						<figure class="image">
+							<img src="/public/intro2.png">
+						</figure>
+					</div>
+					<div class="column is-half-desktop">
+						3. 就可以看到影片的網址囉，把他複製起來
+						<figure class="image">
+							<img src="/public/intro3.png">
+						</figure>
+					</div>
+					<div class="column is-half-desktop">
+						4. 貼到這裡，然後按馬上試試，就能載入留言抽獎囉！
+						<figure class="image">
+							<img src="/public/intro4.png">
+						</figure>
+					</div>
+				</div>
+			</div>
+			</div>
+		</section>
+		<? endif;?>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 		<script>
 			var app = angular.module('app', []);
@@ -164,8 +231,8 @@
 					$http.get('/comments?url=' + $scope.url).success(function(res) {
 						comments = res;
 						$scope.comments = comments;
-					}).error(function() {
-						alert('文章網址錯誤。');
+					}).error(function(error) {
+						alert(error);
 					}).finally(function() {
 						$scope.loading = false;
 					});
